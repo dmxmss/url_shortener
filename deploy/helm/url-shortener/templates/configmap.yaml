@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "url-shortener.fullname" . }}-config
+data:
+  APP_ENV: production
+  LOG_LEVEL: info
+  PUBLIC_BASE_URL: {{ .Values.publicBaseUrl | quote }}
+  API_ADDR: :8080
+  REDIRECT_ADDR: :8081
+  REDIS_ADDR: {{ include "url-shortener.fullname" . }}-redis:6379
+  CACHE_TTL: 24h
+  {{- if .Values.nats.enabled }}
+  NATS_URL: nats://{{ include "url-shortener.fullname" . }}-nats:4222
+  {{- end }}
+

@@ -1,0 +1,56 @@
+image:
+  registry: registry.gitlab.com/dmxmss-group/dmxmss-project
+  tag: latest
+  pullPolicy: IfNotPresent
+
+publicBaseUrl: http://short.local
+
+postgresql:
+  image: postgres:16-alpine
+  auth:
+    username: shortener
+    password: shortener
+    database: shortener
+  storage: 1Gi
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+redis:
+  image: redis:7-alpine
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+nats:
+  enabled: false
+  image: nats:2.10-alpine
+
+shortenerApi:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 250m
+      memory: 128Mi
+
+redirectService:
+  replicas: 2
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 250m
+      memory: 128Mi
+

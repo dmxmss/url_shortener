@@ -1,0 +1,35 @@
+stages:
+  - test
+  - build
+  - deploy-check
+
+variables:
+  DOCKER_TLS_CERTDIR: ""
+  IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+
+test:
+  image: golang:1.22-alpine
+  stage: test
+  script:
+    - go test ./...
+
+build docker images:
+  image: docker:27
+  stage: build
+  services:
+    - docker:27-dind
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker build -f api/Dockerfile -t "$CI_REGISTRY_IMAGE/shortener-api:$IMAGE_TAG" .
+    - docker build -f redirect-service/Dockerfile -t "$CI_REGISTRY_IMAGE/redirect-service:$IMAGE_TAG" .
+    - docker push "$CI_REGISTRY_IMAGE/shortener-api:$IMAGE_TAG"
+    - docker push "$CI_REGISTRY_IMAGE/redirect-service:$IMAGE_TAG"
+  rules:
+    - if: $CI_COMMIT_BRANCH
+
+helm lint:
+  image: alpine/helm:3.15.4
+  stage: deploy-check
+  script:
+    - helm lint deploy/helm/url-shortener
+

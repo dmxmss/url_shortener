@@ -1,0 +1,7 @@
+apiVersion: v2
+name: url-shortener
+description: Lightweight URL shortener for small Kubernetes clusters
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+

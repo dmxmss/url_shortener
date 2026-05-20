@@ -1,0 +1,25 @@
+{
+  "title": "URL Shortener",
+  "schemaVersion": 39,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Redirects",
+      "targets": [{"expr": "sum(redirect_service_redirects_total)"}],
+      "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4}
+    },
+    {
+      "type": "stat",
+      "title": "Links Created",
+      "targets": [{"expr": "sum(shortener_api_links_created_total)"}],
+      "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4}
+    },
+    {
+      "type": "timeseries",
+      "title": "HTTP Requests",
+      "targets": [{"expr": "sum by (path, status) (rate(shortener_api_http_requests_total[5m])) + sum by (path, status) (rate(redirect_service_http_requests_total[5m]))"}],
+      "gridPos": {"x": 0, "y": 4, "w": 12, "h": 8}
+    }
+  ]
+}
+

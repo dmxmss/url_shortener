@@ -1,0 +1,6 @@
+.git
+bin
+.env
+tmp
+*.log
+
