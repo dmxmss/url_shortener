@@ -43,8 +43,17 @@ jobs:
       - name: Build & Push Image
         run: |
           docker buildx build \
+            -f api/Dockerfile \
             --platform linux/amd64 \
-          -t ghcr.io/${{ github.actor }}/url_shortener:latest \
-          -t ghcr.io/${{ github.actor }}/url_shortener:sha-${GITHUB_SHA::7} \
-          --push \
-          .
+            -t ghcr.io/${{ github.actor }}/url_shortener-api:latest \
+            -t ghcr.io/${{ github.actor }}/url_shortener-api:sha-${GITHUB_SHA::7} \
+            --push \
+            .
+
+          docker buildx build \
+            -f redirect-service/Dockerfile \
+            --platform linux/amd64 \
+            -t ghcr.io/${{ github.actor }}/url_shortener-redirect-service:latest \
+            -t ghcr.io/${{ github.actor }}/url_shortener-redirect-service:sha-${GITHUB_SHA::7} \
+            --push \
+            .
