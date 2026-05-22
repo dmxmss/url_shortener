@@ -1,5 +1,5 @@
 image:
-  registry: registry.gitlab.com/dmxmss-group/dmxmss-project
+  registry: ghcr.io/dmxmss
   tag: latest
   pullPolicy: IfNotPresent
 

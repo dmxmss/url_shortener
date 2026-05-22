@@ -125,7 +125,7 @@ api/                  shortener-api Dockerfile and service entrypoint
 redirect-service/     redirect-service Dockerfile and service entrypoint
 internal/             shared application packages
 deploy/helm/          Helm chart for Kubernetes
-k8s/                  plain Kubernetes manifests
+deploy/pure_kubectl/  plain Kubernetes manifests
 scripts/              helper scripts and SQL migrations
 ```
 
