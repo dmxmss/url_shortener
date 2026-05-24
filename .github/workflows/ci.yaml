@@ -6,7 +6,13 @@ on:
       - ".github/**"
       - "deploy/**"
       - "scripts/**"
+      - "Makefile"
+      - "docker-compose.yml"
     branches: ["main"]
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   test:
@@ -47,15 +53,15 @@ jobs:
           docker buildx build \
             -f api/Dockerfile \
             --platform linux/amd64 \
-            -t ghcr.io/${{ github.actor }}/url_shortener-api:latest \
-            -t ghcr.io/${{ github.actor }}/url_shortener-api:sha-${GITHUB_SHA::7} \
+            -t ghcr.io/${{ github.repository_owner }}/url_shortener-api:latest \
+            -t ghcr.io/${{ github.repository_owner }}/url_shortener-api:sha-${GITHUB_SHA::7} \
             --push \
             .
 
           docker buildx build \
             -f redirect-service/Dockerfile \
             --platform linux/amd64 \
-            -t ghcr.io/${{ github.actor }}/url_shortener-redirect-service:latest \
-            -t ghcr.io/${{ github.actor }}/url_shortener-redirect-service:sha-${GITHUB_SHA::7} \
+            -t ghcr.io/${{ github.repository_owner }}/url_shortener-redirect-service:latest \
+            -t ghcr.io/${{ github.repository_owner }}/url_shortener-redirect-service:sha-${GITHUB_SHA::7} \
             --push \
             .
