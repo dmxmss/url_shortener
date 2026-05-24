@@ -71,6 +71,17 @@ services:
       nats:
         condition: service_started
 
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    environment:
+      FRONTEND_API_UPSTREAM: http://shortener-api:8080
+    ports:
+      - "3000:80"
+    depends_on:
+      shortener-api:
+        condition: service_started
+
 volumes:
   postgres_data:
-
