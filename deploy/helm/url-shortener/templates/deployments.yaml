@@ -15,6 +15,8 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
     spec:
+      imagePullSecrets:
+{{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: shortener-api
           image: {{ .Values.image.registry }}/shortener-api:{{ .Values.image.tag }}
@@ -54,6 +56,8 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8081"
     spec:
+      imagePullSecrets:
+{{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: redirect-service
           image: {{ .Values.image.registry }}/redirect-service:{{ .Values.image.tag }}

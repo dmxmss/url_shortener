@@ -1,6 +1,6 @@
 SHELL := /bin/sh
 
-IMAGE_REGISTRY ?= registry.gitlab.com/dmxmss-group/dmxmss-project
+IMAGE_REGISTRY ?= ghcr.io/dmxmss
 IMAGE_TAG ?= local
 
 .PHONY: test build run-api run-redirect compose-up compose-down compose-logs migrate docker-build docker-push helm-lint fmt

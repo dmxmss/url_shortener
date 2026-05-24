@@ -5,6 +5,9 @@ image:
 
 publicBaseUrl: http://short.local
 
+imagePullSecrets:
+  - name: ghcr-secret
+
 postgresql:
   image: postgres:16-alpine
   auth:
