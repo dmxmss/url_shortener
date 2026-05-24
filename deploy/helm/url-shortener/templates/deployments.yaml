@@ -19,7 +19,7 @@ spec:
 {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: shortener-api
-          image: {{ .Values.image.registry }}/shortener-api:{{ .Values.image.tag }}
+          image: {{ .Values.image.registry }}/url_shortener-api:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 8080
@@ -60,7 +60,7 @@ spec:
 {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: redirect-service
-          image: {{ .Values.image.registry }}/redirect-service:{{ .Values.image.tag }}
+          image: {{ .Values.image.registry }}/url_shortener-redirect-service:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 8081

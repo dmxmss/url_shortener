@@ -16,7 +16,7 @@ spec:
 {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: frontend
-          image: {{ .Values.image.registry }}/frontend:{{ .Values.image.tag }}
+          image: {{ .Values.image.registry }}/url_shortener-frontend:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 80
