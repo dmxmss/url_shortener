@@ -57,3 +57,14 @@ redirectService:
       cpu: 250m
       memory: 128Mi
 
+frontend:
+  replicas: 1
+  apiBaseUrl: ""
+  apiUpstream: ""
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 100m
+      memory: 64Mi

@@ -1,3 +1,5 @@
 .vscode
 .agents
 .codex
+frontend/node_modules
+frontend/dist
