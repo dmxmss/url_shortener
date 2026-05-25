@@ -6,7 +6,7 @@ service:
 
 ports:
   web:
-    port: 80
+    port: 8000
     exposedPort: 80
 
 providers:
@@ -15,9 +15,6 @@ providers:
 
   kubernetesIngress:
     enabled: true
-
-dashboard:
-  enabled: true
 
 ingressRoute:
   dashboard:
