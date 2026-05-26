@@ -57,6 +57,15 @@ redirectService:
       cpu: 250m
       memory: 128Mi
 
+ingressRoute:
+  enabled: false
+
+  entryPoints:
+    - web
+
+  tls:
+    enabled: false
+
 frontend:
   replicas: 1
   apiBaseUrl: ""

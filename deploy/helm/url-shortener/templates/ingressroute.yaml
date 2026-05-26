@@ -1,0 +1,52 @@
+{{- if .Values.ingressRoute.enabled }}
+apiVersion: traefik.io/v1aplha1
+kind: IngressRoute
+metadata:
+  name: {{ include "url-shortener.fullname" . }}-ingressroute
+
+  {{- with .Values.ingressRoute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+spec:
+  entryPoints:
+    {{- range .Values.ingressRoute.entryPoints }}
+      - {{ . }}
+    {{- end }}
+
+  routes:
+    {{- range .Values.ingressRoute.routes }}
+      - match: {{ .match | quote }}
+        kind: Rule
+        
+        {{- if .middlewares }}
+        middlewares:
+          {{- range .middlewares }}
+          - name: {{ .name }}
+            {{- if .namespace }}
+            namespace: {{ .namespace }}
+            {{- end }}
+          {{- end }}
+        {{- end }}
+
+        services:
+          {{- range .services }}
+          - name: {{ .name }}
+            port: {{ .port }}
+
+            {{- if .scheme}}
+            scheme: {{ .scheme }}
+            {{- end}}
+
+            {{- if .passHostHeader }}
+            passHostHeader: {{ .passHostHeader }}
+            {{- end }}
+          {{- end }}
+    {{- end }}
+
+    {{- if .Values.ingressRoute.tls.enabled }}
+    tls:
+      secretName: {{ .Values.ingressRoute.tsl.secretName }}
+    {{- end }}
+{{- end }}
