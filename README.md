@@ -149,5 +149,6 @@ frontend/             React frontend and nginx image
 internal/             shared application packages
 deploy/helm/          Helm chart for Kubernetes
 deploy/pure_kubectl/  plain Kubernetes manifests
+deploy/values/        values files for different workarounds (dev/prod/stage) 
 scripts/              helper scripts and SQL migrations
 ```
