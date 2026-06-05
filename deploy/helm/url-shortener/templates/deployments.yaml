@@ -11,6 +11,9 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/component: shortener-api
+{{- if .Values.shortenerApi.labels }}
+{{- toYaml .Values.shortenerApi.labels | nindent 8 }}
+{{- end }}
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
@@ -52,6 +55,9 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/component: redirect-service
+{{- if .Values.redirectService.labels }}
+{{- toYaml .Values.redirectService.labels | nindent 8 }}
+{{- end }}
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8081"
@@ -79,4 +85,53 @@ spec:
               port: 8081
           resources:
 {{ toYaml .Values.redirectService.resources | indent 12 }}
-
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "url-shortener.fullname" . }}-frontend
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: frontend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: frontend
+{{- if .Values.frontend.labels }}
+{{- toYaml .Values.frontend.labels | nindent 8 }}
+{{- end }}
+    spec:
+      imagePullSecrets:
+{{- toYaml .Values.imagePullSecrets | nindent 8 }}
+      containers:
+        - name: frontend
+          image: {{ .Values.image.registry }}/url_shortener-frontend:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+          env:
+            - name: FRONTEND_API_UPSTREAM
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "url-shortener.fullname" . }}-frontend-config
+                  key: FRONTEND_API_UPSTREAM
+          volumeMounts:
+            - name: frontend-config
+              mountPath: /usr/share/nginx/html/config.js
+              subPath: config.js
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+          resources:
+{{ toYaml .Values.frontend.resources | indent 12 }}
+      volumes:
+        - name: frontend-config
+          configMap:
+            name: {{ include "url-shortener.fullname" . }}-frontend-config

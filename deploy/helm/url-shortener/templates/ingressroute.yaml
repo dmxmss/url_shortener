@@ -47,6 +47,6 @@ spec:
 
     {{- if .Values.ingressRoute.tls.enabled }}
     tls:
-      secretName: {{ .Values.ingressRoute.tsl.secretName }}
+      secretName: {{ .Values.ingressRoute.tls.secretName }}
     {{- end }}
 {{- end }}

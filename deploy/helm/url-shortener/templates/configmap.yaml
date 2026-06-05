@@ -13,4 +13,14 @@ data:
   {{- if .Values.nats.enabled }}
   NATS_URL: nats://{{ include "url-shortener.fullname" . }}-nats:4222
   {{- end }}
-
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "url-shortener.fullname" . }}-frontend-config
+data:
+  FRONTEND_API_UPSTREAM: {{ default (printf "http://%s-shortener-api" (include "url-shortener.fullname" .)) .Values.frontend.apiUpstream | quote }}
+  config.js: |-
+    window.__URL_SHORTENER_CONFIG__ = {
+      API_BASE_URL: {{ .Values.frontend.apiBaseUrl | quote }}
+    };
