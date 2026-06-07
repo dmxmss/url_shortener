@@ -4,6 +4,7 @@ image:
   pullPolicy: IfNotPresent
 
 publicBaseUrl: http://short.local
+redirectPublicUrl: http://redirect.local
 
 imagePullSecrets:
   - name: ghcr-secret

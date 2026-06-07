@@ -107,7 +107,7 @@ func (s *server) shorten(w http.ResponseWriter, r *http.Request) {
 	_ = s.cache.SetURL(r.Context(), code, longURL, s.cfg.CacheTTL)
 	resp := shortenResponse{
 		ShortCode: code,
-		ShortURL:  strings.TrimRight(s.cfg.PublicBaseURL, "/") + "/" + code,
+		ShortURL:  strings.TrimRight(s.cfg.RedirectPublicURL, "/") + "/" + code,
 	}
 	httpx.JSON(w, http.StatusCreated, resp)
 	s.m.LinksCreated.Inc()

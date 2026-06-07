@@ -6,6 +6,7 @@ data:
   APP_ENV: production
   LOG_LEVEL: info
   PUBLIC_BASE_URL: {{ .Values.publicBaseUrl | quote }}
+  REDIRECT_PUBLIC_URL: {{ .Values.redirectPublicUrl | quote }}
   API_ADDR: :8080
   REDIRECT_ADDR: :8081
   REDIS_ADDR: {{ include "url-shortener.fullname" . }}-redis:6379
