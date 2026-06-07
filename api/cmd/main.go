@@ -56,7 +56,7 @@ func main() {
 
 	s := &server{cfg: cfg, db: store, cache: redis, log: log, m: metrics.New("shortener_api")}
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST /api/shorten", s.shorten)
+	mux.HandleFunc("POST /shorten", s.shorten)
 	mux.HandleFunc("GET /healthz", httpx.Healthz)
 	mux.HandleFunc("GET /readyz", httpx.Readyz(store, redis))
 	mux.Handle("GET /metrics", s.m.Handler())
