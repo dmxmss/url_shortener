@@ -4,6 +4,9 @@ metadata:
   name: {{ include "url-shortener.fullname" . }}-shortener-api
   labels:
     app.kubernetes.io/component: shortener-api
+{{- if .Values.shortenerApi.service.labels }}
+{{- toYaml .Values.shortenerApi.service.labels | nindent 4}}
+{{- end }}
 spec:
   selector:
     app.kubernetes.io/component: shortener-api
@@ -17,6 +20,9 @@ metadata:
   name: {{ include "url-shortener.fullname" . }}-redirect-service
   labels:
     app.kubernetes.io/component: redirect-service
+{{- if .Values.redirectService.service.labels }}
+{{- toYaml .Values.redirectService.service.labels | nindent 4}}
+{{- end }}
 spec:
   selector:
     app.kubernetes.io/component: redirect-service
@@ -30,6 +36,9 @@ metadata:
   name: {{ include "url-shortener.fullname" . }}-frontend
   labels:
     app.kubernetes.io/component: frontend
+{{- if .Values.frontend.service.labels }}
+{{- toYaml .Values.frontend.service.labels | nindent 4}}
+{{- end }}
 spec:
   selector:
     app.kubernetes.io/component: frontend
