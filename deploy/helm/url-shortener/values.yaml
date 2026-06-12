@@ -94,10 +94,24 @@ ingress:
     enabled: true
     secretName: tls-semgateam-ru
 
+  middleware: 
+    items:
+      - name: api-strip-prefix-middleware
+        spec:
+          stripPrefix:
+            prefixes:
+              - /api
+
+      - name: redirect-strip-prefix-middleware
+        spec:
+          stripPrefix:
+            prefixes:
+              - /redirect
+
   items:
     - name: shortener-api-ingress
       annotations:
-        traefik.ingress.kubernetes.io/router.middlewares: default-api-strip-prefix@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: default-api-strip-prefix-middleware@kubernetescrd
       path: /api  
       service:
         name: url-shortener-url-shortener-shortener-api
@@ -105,7 +119,7 @@ ingress:
 
     - name: redirect-service-ingress
       annotations:
-        traefik.ingress.kubernetes.io/router.middlewares: default-redirect-strip-prefix@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: default-redirect-strip-prefix-middleware@kubernetescrd
       path: /redirect
       service:
         name: url-shortener-url-shortener-redirect-service
