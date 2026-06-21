@@ -114,6 +114,8 @@ func routeLabel(path string) string {
 	switch {
 	case path == "/api/shorten":
 		return "/api/shorten"
+	case path == "/shorten":
+		return "/shorten"
 	case path == "/healthz" || path == "/readyz" || path == "/metrics":
 		return path
 	default:
