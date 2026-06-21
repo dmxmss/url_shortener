@@ -3,3 +3,5 @@
 .codex
 frontend/node_modules
 frontend/dist
+*/**/__pycache__
+*/**/venv
